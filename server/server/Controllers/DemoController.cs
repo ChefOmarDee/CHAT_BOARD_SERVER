@@ -3,6 +3,8 @@ using Newtonsoft.Json.Linq;
 using server.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using server.HelperFunctions;
+using System.Runtime.InteropServices.ObjectiveC;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,31 +18,36 @@ namespace server.Controllers
     {
         // GET: api/<DemoController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<StoredJson> Get()
         {
 
-            Console.WriteLine("a");
-            return new string[] { "omar k", "value2" };
+            return (JsonFileUtils.getHandler());
+
         }
 
         // GET api/<DemoController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        /*[HttpGet("{id}")]
+        public List<Demo> Get(int id)
         {
-            Console.WriteLine("b");
-            return (id).ToString();
-        }
+            List <Demo> omar=new List <Demo> ();
+            omar.Add(new Demo() 
+            { 
+                msg="his",
+                name="hi"
+            });
+            return omar;
+        }*/
 
         // POST api/Demo
         [HttpPost()]
-        public void Post([FromBody] server.Models.Demo value)
+        public void Post([FromBody] Demo value)
         {
 
             Console.WriteLine("c");
             Console.WriteLine(value.msg);
-            /*JObject o = JObject.Parse(value);
-            Console.WriteLine(o.GetType());*/
-
+/*            JsonFileUtils.PrettyWrite(obj: value, fileName: "Omar.json");
+*//*            JsonFileUtils.BAM(obj: value);
+*/            JsonFileUtils.jsonEditor(value);
         }
 
 
