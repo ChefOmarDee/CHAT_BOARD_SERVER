@@ -17,13 +17,26 @@ namespace server.HelperFunctions
 
             var userList = JsonConvert.DeserializeObject<List<StoredJson>>(jsonData)
                                   ?? new List<StoredJson>();
-            int count = userList.Count;
+            int count=userList.Count;
+            int id;
+            if (userList.Count == 0)
+            {
+                id = 0;
+            }
+            else
+            {
+                id = userList[count - 1].id + 1;
+            }
             userList.Add(new StoredJson()
             {
                 name = obj.name,
                 msg = obj.msg,
                 id = count + 1
             });
+
+
+
+
             //save for the delete method
             /*            count++;
                         Console.WriteLine(userList.Count);
@@ -42,16 +55,32 @@ namespace server.HelperFunctions
         }
         public static List<StoredJson> getHandler()
         {
-            List<StoredJson> omar = new List<StoredJson>();
-            omar.Add(new StoredJson()
-            {
-                id = 1,
-                msg = "helo",
-                name = "ji"
-            });
- 
+            var jsonData = System.IO.File.ReadAllText(path: "./HelperFunctions/Omar.json");
+            List<StoredJson> userList = JsonConvert.DeserializeObject<List<StoredJson>>(jsonData);
 
-            return omar;
+            return userList;
+        }
+        public static void jsonDeleter(int id)
+        {
+            var jsonData = System.IO.File.ReadAllText(path: "./HelperFunctions/Omar.json");
+
+            var userList = JsonConvert.DeserializeObject<List<StoredJson>>(jsonData)
+                                  ?? new List<StoredJson>();
+
+
+            //save for the delete method
+            int count= userList.Count;
+            Console.WriteLine(userList.Count);
+            for (int i = 0; i < count; i++)
+            {
+                if (userList[index: i].id == id)
+                {
+                    userList.RemoveAt(i);
+                    break;
+                }
+            }
+            jsonData = JsonConvert.SerializeObject(userList, Formatting.Indented, _options);
+            System.IO.File.WriteAllText("./HelperFunctions/Omar.json", jsonData);
         }
     }
 }

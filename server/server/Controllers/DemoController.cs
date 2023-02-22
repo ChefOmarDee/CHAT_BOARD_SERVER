@@ -45,9 +45,7 @@ namespace server.Controllers
 
             Console.WriteLine("c");
             Console.WriteLine(value.msg);
-/*            JsonFileUtils.PrettyWrite(obj: value, fileName: "Omar.json");
-*//*            JsonFileUtils.BAM(obj: value);
-*/            JsonFileUtils.jsonEditor(value);
+            JsonFileUtils.jsonEditor(value);
         }
 
 
@@ -62,7 +60,9 @@ namespace server.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            Console.WriteLine("e");
+            Console.WriteLine(id);
+            JsonFileUtils.jsonDeleter(id);
+
         }
     }
 }
